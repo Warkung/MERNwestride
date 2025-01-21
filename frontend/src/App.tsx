@@ -1,5 +1,17 @@
 import Title from "./components/header/Title";
-
+import { ThemedLayoutV2 } from "./components/layout";
+import {
+  Agents,
+  AgentProfile,
+  AllProperties,
+  CreateProperty,
+  DetailProperty,
+  EditProperty,
+  Home,
+  Login,
+  Review,
+  Messages,
+} from "./pages";
 
 import {
   AuthBindings,
@@ -13,7 +25,7 @@ import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import {
   ErrorComponent,
   RefineSnackbarProvider,
-  ThemedLayoutV2,
+  // ThemedLayoutV2,
   useNotificationProvider,
 } from "@refinedev/mui";
 
@@ -31,20 +43,21 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { Header } from "./components/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
 import { CredentialResponse } from "./interfaces/google";
-import {
-  BlogPostCreate,
-  BlogPostEdit,
-  BlogPostList,
-  BlogPostShow,
-} from "./pages/blog-posts";
-import {
-  CategoryCreate,
-  CategoryEdit,
-  CategoryList,
-  CategoryShow,
-} from "./pages/categories";
-import { Login } from "./pages/login";
+
 import { parseJwt } from "./utils/parse-jwt";
+import {
+  AccountBoxOutlined,
+  EmojiPeopleOutlined,
+  HolidayVillageOutlined,
+  Message,
+  Reviews,
+  ReviewsOutlined,
+  ReviewsRounded,
+  ReviewsSharp,
+  Star,
+  StarBorderOutlined,
+  VillaOutlined,
+} from "@mui/icons-material";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((config) => {
@@ -149,24 +162,52 @@ function App() {
                 authProvider={authProvider}
                 resources={[
                   {
-                    name: "blog_posts",
-                    list: "/blog-posts",
-                    create: "/blog-posts/create",
-                    edit: "/blog-posts/edit/:id",
-                    show: "/blog-posts/show/:id",
-                    meta: {
-                      canDelete: true,
-                    },
+                    name: "home",
+                    icon: <VillaOutlined />,
+                    list: "/home",
+                    // create: "/blog-posts/create",
+                    // edit: "/blog-posts/edit/:id",
+                    // show: "/blog-posts/show/:id",
                   },
                   {
-                    name: "categories",
-                    list: "/categories",
-                    create: "/categories/create",
-                    edit: "/categories/edit/:id",
-                    show: "/categories/show/:id",
-                    meta: {
-                      canDelete: true,
-                    },
+                    name: "properties",
+                    icon: <HolidayVillageOutlined />,
+                    list: "/properties",
+                    // create: "/blog-posts/create",
+                    // edit: "/blog-posts/edit/:id",
+                    // show: "/blog-posts/show/:id",
+                  },
+                  {
+                    name: "Agent",
+                    icon: <EmojiPeopleOutlined />,
+                    list: "/agents",
+                    // create: "/blog-posts/create",
+                    // edit: "/blog-posts/edit/:id",
+                    // show: "/blog-posts/show/:id",
+                  },
+                  {
+                    name: "review",
+                    icon: <Star />,
+                    list: "/review",
+                    // create: "/blog-posts/create",
+                    // edit: "/blog-posts/edit/:id",
+                    // show: "/blog-posts/show/:id",
+                  },
+                  {
+                    name: "message",
+                    icon: <Message />,
+                    list: "/message",
+                    // create: "/blog-posts/create",
+                    // edit: "/blog-posts/edit/:id",
+                    // show: "/blog-posts/show/:id",
+                  },
+                  {
+                    name: "myProfile",
+                    icon: <AccountBoxOutlined />,
+                    list: "/profile",
+                    // create: "/blog-posts/create",
+                    // edit: "/blog-posts/edit/:id",
+                    // show: "/blog-posts/show/:id",
                   },
                 ]}
                 options={{
@@ -183,9 +224,7 @@ function App() {
                         key="authenticated-inner"
                         fallback={<CatchAllNavigate to="/login" />}
                       >
-                        <ThemedLayoutV2 Header={Header}
-                        Title={Title}
-                        >
+                        <ThemedLayoutV2 Header={Header} Title={Title}>
                           <Outlet />
                         </ThemedLayoutV2>
                       </Authenticated>
@@ -193,20 +232,27 @@ function App() {
                   >
                     <Route
                       index
-                      element={<NavigateToResource resource="blog_posts" />}
+                      element={<NavigateToResource resource="home" />}
                     />
-                    <Route path="/blog-posts">
-                      <Route index element={<BlogPostList />} />
-                      <Route path="create" element={<BlogPostCreate />} />
-                      <Route path="edit/:id" element={<BlogPostEdit />} />
-                      <Route path="show/:id" element={<BlogPostShow />} />
+                    <Route path="/home">
+                      <Route index element={<Home />} />
                     </Route>
-                    <Route path="/categories">
-                      <Route index element={<CategoryList />} />
-                      <Route path="create" element={<CategoryCreate />} />
-                      <Route path="edit/:id" element={<CategoryEdit />} />
-                      <Route path="show/:id" element={<CategoryShow />} />
+                    <Route path="/properties">
+                      <Route index element={<AllProperties />} />
                     </Route>
+                    <Route path="/agents">
+                      <Route index element={<Agents />} />
+                    </Route>
+                    <Route path="/review">
+                      <Route index element={<Review />} />
+                    </Route>
+                    <Route path="/message">
+                      <Route index element={<Messages />} />
+                    </Route>
+                    <Route path="/profile">
+                      <Route index element={<AgentProfile />} />
+                    </Route>
+
                     <Route path="*" element={<ErrorComponent />} />
                   </Route>
                   <Route
