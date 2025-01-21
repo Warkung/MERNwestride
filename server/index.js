@@ -18,6 +18,11 @@ const port = process.env.PORT || 3000;
 readdirSync("./routes").map((r) =>
   app.use("/api/v1", require(`./routes/${r}`))
 );
+app.all("*", (req, res) => {
+  res.status(404).json({
+    message: "Page not found",
+  });
+});
 
 const startServer = async () => {
   try {
