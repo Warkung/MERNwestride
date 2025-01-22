@@ -1,9 +1,21 @@
-import React from 'react'
+import { Box, Typography } from "@mui/material";
+import React from "react";
 
 function TotalRevenue() {
   return (
-    <div>TotalRevenue</div>
-  )
+    <Box
+      p={4}
+      flex={1}
+      bgcolor={"#fff"}
+      borderRadius={5}
+      flexDirection={"column"}
+      display={"flex"}
+    >
+      <Typography variant={"h6"} color="#11142d">
+        TotalRevenue
+      </Typography>
+    </Box>
+  );
 }
 
-export default TotalRevenue
+export default TotalRevenue;
