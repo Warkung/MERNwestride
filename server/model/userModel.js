@@ -13,9 +13,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  allProperties: {
+  allProperty: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Property",
+    required: false,    
   },
 });
 

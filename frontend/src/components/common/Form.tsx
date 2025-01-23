@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   FormControl,
   FormHelperText,
   MenuItem,
@@ -12,19 +13,9 @@ import {
 import { CreateResponse, UpdateResponse } from "@refinedev/core";
 import React, { FormEventHandler } from "react";
 import { FieldValues } from "react-hook-form";
+import CustomButton from "./CustomButton";
+import { FormProps } from "../../interfaces/homeInterface";
 
-interface FormProps {
-  type: string;
-  register: any;
-  onFinish: (
-    values: FieldValues
-  ) => Promise<void | CreateResponse | UpdateResponse>;
-  formloading: boolean;
-  handleSubmit: FormEventHandler<HTMLFormElement> | undefined;
-  handleImageChange: (file: any) => void;
-  onFinishedHandler: (values: FieldValues) => Promise<void>;
-  propertyImages: { name: string; url: string };
-}
 
 function Form({
   type,
@@ -70,7 +61,7 @@ function Form({
               placeholder="Property Name"
               variant="outlined"
               size="small"
-              // {...register("title", { required: true })}
+              {...register("title", { required: true })}
             />
           </FormControl>
           <FormControl>
@@ -97,9 +88,10 @@ function Form({
                 fontSize: "14px",
                 boxShadow: "0 0 5px rgba(0,0,0,0.2)",
               }}
+              {...register("description", { required: true })}
             />
           </FormControl>
-          <Stack direction="row" gap={4}>
+          <Stack direction={{ xs: "column", sm: "row" }} gap={4}>
             <FormControl sx={{ flex: 1 }}>
               <FormHelperText
                 sx={{
@@ -118,6 +110,7 @@ function Form({
                 displayEmpty
                 inputProps={{ "aria-label": "Without label" }}
                 defaultValue={"apartment"}
+                {...register("propertyType", { required: true })}
               >
                 <MenuItem value="apartment">Apartment</MenuItem>
                 <MenuItem value="villa">Villa</MenuItem>
@@ -143,30 +136,70 @@ function Form({
                 placeholder="Property price"
                 variant="outlined"
                 size="small"
-                // {...register("title", { required: true })}
+                {...register("price", { required: true })}
               />
             </FormControl>
           </Stack>
           <FormControl>
-          <FormHelperText
+            <FormHelperText
+              sx={{
+                fontWeight: 500,
+                margin: "10px 0",
+                fontSize: 16,
+              }}
+            >
+              Enter property location
+            </FormHelperText>
+            <TextField
+              fullWidth
+              required
+              color="info"
+              placeholder="Property location"
+              variant="outlined"
+              size="small"
+              {...register("location", { required: true })}
+            />
+          </FormControl>
+          <Stack direction="column" gap={1} justifyContent={"center"} mb={2}>
+            <Stack direction={"row"} gap={2}>
+              <Typography fontSize={16} fontWeight={500} my={"10px"}>
+                Property Photo
+              </Typography>
+              <Button
+                component="label"
                 sx={{
-                  fontWeight: 500,
-                  margin: "10px 0",
-                  fontSize: 16,
+                  width: "fit-content",
+                  color: "#2ed480",
+                  textTransform: "capitalize",
+                  fontSize: "16px",
                 }}
               >
-                Enter property location
-              </FormHelperText>
-              <TextField
-                fullWidth
-                required
-                color="info"
-                placeholder="Property location"
-                variant="outlined"
-                size="small"
-                // {...register("title", { required: true })}
-              />
-          </FormControl>
+                upload *
+                <input
+                  hidden
+                  type="file"
+                  accept="image/*"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {                    
+                    handleImageChange(e.target.files![0]);
+                  }}
+                />
+              </Button>
+            </Stack>
+            <Typography
+              fontSize={14}
+              fontWeight={400}
+              color={propertyImages?.name ? "green" : "#666"}
+              sx={{ wordBreak: "break-all" }}
+            >
+              {propertyImages?.name || "No image selected"}
+            </Typography>
+          </Stack>
+          <CustomButton
+            type="submit"
+            title={formloading ? "Loading..." : "Submit"}
+            backgroundColor={"#475be8"}
+            color={"#fff"}
+          />
         </form>
       </Box>
     </Box>
