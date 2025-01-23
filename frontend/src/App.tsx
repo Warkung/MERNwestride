@@ -75,6 +75,21 @@ function App() {
       const profileObj = credential ? parseJwt(credential) : null;
 
       if (profileObj) {
+        const response = await fetch("http://localhost:8080/api/v1/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: profileObj.name,
+            email: profileObj.email,
+            avatar: profileObj.picture,
+          }),
+        });
+
+        const data = await response.json();
+        // console.log(data);
+
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -173,7 +188,7 @@ function App() {
                     name: "properties",
                     icon: <HolidayVillageOutlined />,
                     list: "/properties",
-                    // create: "/blog-posts/create",
+                    create: "/properties/create",
                     // edit: "/blog-posts/edit/:id",
                     // show: "/blog-posts/show/:id",
                   },
@@ -239,6 +254,7 @@ function App() {
                     </Route>
                     <Route path="/properties">
                       <Route index element={<AllProperties />} />
+                      <Route path="create" element={<CreateProperty />} />
                     </Route>
                     <Route path="/agents">
                       <Route index element={<Agents />} />

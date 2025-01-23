@@ -15,7 +15,7 @@ const createUser = async (req, res) => {
     const { name, email, avatar } = req.body;
     const user = await userModel.findOne({ email });
     if (user) {
-      return res.status(400).json(user);
+      return res.status(200).json(user);
     }
     const newUser = new userModel({
       name,
