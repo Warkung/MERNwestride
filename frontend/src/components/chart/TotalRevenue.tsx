@@ -12,7 +12,10 @@ function TotalRevenue() {
       display={"flex"}
     >
       <Typography variant={"h6"} color="#11142d">
-        TotalRevenue
+        Total Revenue
+      </Typography>
+      <Typography m>
+        Total Revenue
       </Typography>
     </Box>
   );
