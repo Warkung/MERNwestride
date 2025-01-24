@@ -1,6 +1,6 @@
 import { CreateResponse, UpdateResponse } from "@refinedev/core";
 import { FormEventHandler } from "react";
-import { FieldValues } from "react-hook-form";
+import { FieldValues, UseFormHandleSubmit } from "react-hook-form";
 
 export interface PieChartProps {
   title: string;
@@ -16,8 +16,8 @@ export interface FormProps {
     values: FieldValues
   ) => Promise<void | CreateResponse | UpdateResponse>;
   formloading: boolean;
-  handleSubmit: FormEventHandler<HTMLFormElement> | undefined;
+  handleSubmit: UseFormHandleSubmit<FieldValues>
   handleImageChange: (file: any) => void;
-  onFinishedHandler: (values: FieldValues) => Promise<void>;
+  onFinishedHandler: (data: FieldValues) => Promise<void>;
   propertyImages: { name: string; url: string };
 }

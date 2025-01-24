@@ -88,22 +88,26 @@ function App() {
         });
 
         const data = await response.json();
-        console.log(data);
 
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            ...profileObj,
-            avatar: profileObj.picture,
-          })
-        );
+        if (response.status === 200) {
+          console.log(data);
+          
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              ...profileObj,
+              avatar: profileObj.picture,
+              userId: data._id,
+            })
+          );
 
-        localStorage.setItem("token", `${credential}`);
+          localStorage.setItem("token", `${credential}`);
 
-        return {
-          success: true,
-          redirectTo: "/",
-        };
+          return {
+            success: true,
+            redirectTo: "/",
+          };
+        }
       }
 
       return {
@@ -171,7 +175,7 @@ function App() {
           <RefineSnackbarProvider>
             <DevtoolsProvider>
               <Refine
-                dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+                dataProvider={dataProvider("http://localhost:8080/api/v1")}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
                 authProvider={authProvider}

@@ -15,8 +15,9 @@ const userSchema = new mongoose.Schema({
   },
   allProperty: {
     type: mongoose.Schema.Types.ObjectId,
+    type: Array,
     ref: "Property",
-    required: false,    
+    required: false,
   },
 });
 

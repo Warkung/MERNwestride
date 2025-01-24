@@ -5,9 +5,7 @@ import { useForm } from "@refinedev/react-hook-form";
 import { FieldValues } from "react-hook-form";
 
 function CreateProperty() {
-  const { data: user } = useGetIdentity({
-    v3LegacyAuthProviderCompatible: true,
-  });
+  const { data: user } = useGetIdentity<any>();
 
   const [propertyImages, setPropertyImages] = useState({
     name: "",
@@ -42,7 +40,7 @@ function CreateProperty() {
       register={register}
       onFinish={onFinish}
       formloading={formLoading}
-      handleSubmit={(e) => handleSubmit(onFinishedHandler)(e)}
+      handleSubmit={handleSubmit}
       handleImageChange={handleImageChange}
       onFinishedHandler={onFinishedHandler}
       propertyImages={propertyImages}

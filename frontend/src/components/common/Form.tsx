@@ -16,7 +16,6 @@ import { FieldValues } from "react-hook-form";
 import CustomButton from "./CustomButton";
 import { FormProps } from "../../interfaces/homeInterface";
 
-
 function Form({
   type,
   register,
@@ -42,7 +41,7 @@ function Form({
             flexDirection: "column",
             gap: "20px",
           }}
-          // onSubmit={handleSubmit(onFinishedHandler)}
+          onSubmit={handleSubmit(onFinishedHandler)}
         >
           <FormControl>
             <FormHelperText
@@ -119,7 +118,7 @@ function Form({
                 <MenuItem value="studio">Studio</MenuItem>
               </Select>
             </FormControl>
-            <FormControl>
+            <FormControl sx={{ flex: 0.5 }}>
               <FormHelperText
                 sx={{
                   fontWeight: 500,
@@ -179,7 +178,7 @@ function Form({
                   hidden
                   type="file"
                   accept="image/*"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {                    
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     handleImageChange(e.target.files![0]);
                   }}
                 />
