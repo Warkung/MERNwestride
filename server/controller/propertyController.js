@@ -17,13 +17,10 @@ const createProperty = async (req, res) => {
   try {
     const { title, description, propertyType, location, price, photo, email } =
       req.body;
-
     const session = await mongoose.startSession();
     session.startTransaction();
-    let user = await UserModel.findOne(email).session(session);
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
+    const user = await UserModel.findOne({ email }).session(session);
+    if (!user) throw new Error("User not found");
     const photoUrl = await cloudinary.uploader.upload(photo);
     const property = new PropertyModel({
       title,
@@ -31,13 +28,13 @@ const createProperty = async (req, res) => {
       propertyType,
       location,
       price,
-      photo: photoUrl.url,
+      photo: photoUrl.url || photo,
       creator: user._id,
     });
-    user.allProperties.push(property);
+    user.allProperty.push(property);
     await user.save({ session });
     await session.commitTransaction();
-    res.status(201).json(property);
+    res.status(201).json({ message: "Property created", property });
   } catch (error) {
     await session.abortTransaction();
     internalError(res, error);
